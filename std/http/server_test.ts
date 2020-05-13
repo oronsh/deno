@@ -544,3 +544,12 @@ test({
     assert((await entry).done);
   },
 });
+
+test({
+  name: "Support ipv6 addrs",
+  async fn(): Promise<void> {
+    const addrStr = "[::1]:8124";
+    const server = serve(addrStr);
+    server.close();
+  }
+});
