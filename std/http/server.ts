@@ -256,8 +256,8 @@ export type HTTPOptions = Omit<Deno.ListenOptions, "transport">;
 export function serve(addr: string | HTTPOptions): Server {
   if (typeof addr === "string") {
     const addrParts = addr.split(":");
-    const port = addrParts[addrParts.length-1];
-    const hostname = addr.slice(0, addr.length - port.length - 1);
+    const port = parseInt(addrParts.pop()!, 10);
+    const hostname = addrParts.length ? addrParts.join(":") : undefined;
     addr = { hostname, port: Number(port) };
   }
 
