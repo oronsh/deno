@@ -544,3 +544,31 @@ test({
     assert((await entry).done);
   },
 });
+
+test({
+  name: "server.serve() should be able to parse IPV4 address",
+  fn: async (): Promise<void> => {
+    const server = serve("127.0.0.1:8124");
+    const expected = {
+      "hostname": "127.0.0.1",
+      "port": 8124,
+      "transport": "tcp",
+    };
+    assertEquals(expected, server.listener.addr);
+    server.close();
+  },
+});
+
+test({
+  name: "server.serve() should be able to parse IPV6 address",
+  fn: async (): Promise<void> => {
+    const server = serve("::1:8124");
+    const expected = {
+      "hostname": "::1",
+      "port": 8124,
+      "transport": "tcp"
+    };
+    assertEquals(expected, server.listener.addr);
+    server.close();
+  },
+});
