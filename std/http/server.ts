@@ -252,9 +252,12 @@ export type HTTPOptions = Omit<Deno.ListenOptions, "transport">;
  *       req.respond({ body });
  *     }
  */
+
 export function serve(addr: string | HTTPOptions): Server {
   if (typeof addr === "string") {
-    const [hostname, port] = addr.split(":");
+    const addr_parts = addr.split(":");
+    const port = addr_parts[addr_parts.length-1];
+    const hostname = addr.slice(0, addr.length - port.length - 1);
     addr = { hostname, port: Number(port) };
   }
 
